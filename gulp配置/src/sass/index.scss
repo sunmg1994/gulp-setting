@@ -1,0 +1,9 @@
+@import"footer.scss";
+$bgColor: #cccccc;
+
+body{
+  background:$bgColor;
+  h1{
+    color: rgb(14, 13, 13);
+  }
+}
