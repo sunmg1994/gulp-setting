@@ -69,7 +69,7 @@ gulp.task("minify", function() {
 // 合并scss
 gulp.task("sass", function() {
   gulp
-    .src("src/sass/index.scss")
+    .src("src/styleSheets/main.scss")
     .pipe(sass().on("error", sass.logError))
     .pipe(gulp.dest("dist/css"));
 });
@@ -87,7 +87,7 @@ gulp.task("scripts", function() {
 gulp.task("watch", function() {
   gulp.watch("src/js/*.js", ["scripts"]);
   gulp.watch("src/images/*", ["imageMin"]);
-  gulp.watch("src/sass/*.scss", ["sass"]);
+  gulp.watch("src/styleSheets/**/*.scss", ['sass']);
   gulp.watch("src/*.html", ["fileinclude"]);
   gulp.watch(['dist/*.html'], ['html']);
   gulp.watch(['dist/css/*.css'], ['html']);
