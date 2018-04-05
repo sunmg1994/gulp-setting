@@ -4,7 +4,7 @@ const uglify = require("gulp-uglify");
 const sass = require("gulp-sass");
 const concat = require("gulp-concat");
 const fileinclude = require("gulp-file-include");
-const connect = require('gulp-connect');
+const connect = require("gulp-connect");
 
 /*
   -- 常用的方法 --
@@ -25,16 +25,15 @@ gulp.task("message", function() {
 // });
 
 // 开启服务器
-gulp.task('connect', function() {
+gulp.task("connect", function() {
   connect.server({
-    root: 'dist',
+    root: "dist",
     livereload: true
   });
 });
 
-gulp.task('html', function () {
-  gulp.src('dist/*.html')
-    .pipe(connect.reload());
+gulp.task("html", function() {
+  gulp.src("dist/*.html").pipe(connect.reload());
 });
 
 // 引入html文件
@@ -88,12 +87,12 @@ gulp.task("watch", function() {
   gulp.watch("src/js/*.js", ["scripts"]);
   gulp.watch("src/images/*", ["imageMin"]);
   gulp.watch("src/styleSheets/**/*.scss", ['sass']);
-  gulp.watch("src/*.html", ["fileinclude"]);
+  gulp.watch("src/**/*.html", ["fileinclude"]);
   gulp.watch(['dist/*.html'], ['html']);
   gulp.watch(['dist/css/*.css'], ['html']);
   
 });
 
-gulp.task("default", ["message", "imageMin", "sass", "scripts","fileinclude"]);
+gulp.task("default", ["message", "imageMin", "sass", "scripts", "fileinclude"]);
 // gulp dev 调用监听刷新
-gulp.task("dev",["connect","watch"]);
+gulp.task("dev", ["connect", "watch"]);
