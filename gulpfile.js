@@ -5,6 +5,7 @@ const sass = require("gulp-sass");
 const concat = require("gulp-concat");
 const fileinclude = require("gulp-file-include");
 const connect = require("gulp-connect");
+const autoprefixer = require("gulp-autoprefixer");
 
 /*
   -- 常用的方法 --
@@ -50,18 +51,19 @@ gulp.task("fileinclude", function() {
 });
 
 // 压缩图片
-gulp.task("imageMin", () =>
-  gulp
-    .src("src/images/*")
-    .pipe(imagemin())
-    .pipe(gulp.dest("dist/images"))
-);
+// gulp.task("imageMin", () =>
+//   gulp
+//     .src("src/images/*")
+//     .pipe(imagemin())
+//     .pipe(gulp.dest("dist/images"))
+// );
 
 // 压缩js
-gulp.task("minify", function() {
+gulp.task("scripts", function() {
   gulp
     .src("src/js/*.js")
-    .pipe(uglify())
+    // .pipe(concat("main.js"))
+    // .pipe(uglify())
     .pipe(gulp.dest("dist/js"));
 });
 
@@ -69,29 +71,26 @@ gulp.task("minify", function() {
 gulp.task("sass", function() {
   gulp
     .src("src/scss/main.scss")
+    .pipe(
+      autoprefixer({
+        browsers: ["last 2 versions"],
+        cascade: false
+      })
+    )
     .pipe(sass().on("error", sass.logError))
     .pipe(gulp.dest("dist/css"));
-});
-
-// Scripts
-gulp.task("scripts", function() {
-  gulp
-    .src("src/js/*.js")
-    .pipe(concat("main.js"))
-    .pipe(uglify())
-    .pipe(gulp.dest("dist/js"));
 });
 
 // 监听
 gulp.task("watch", function() {
   gulp.watch("src/js/*.js", ["scripts"]);
-  gulp.watch("src/images/*", ["imageMin"]);
-  gulp.watch("src/**/*.scss", ['sass']);
+  // gulp.watch("src/images/*", ["imageMin"]);
+  gulp.watch("src/**/*.scss", ["sass"]);
   gulp.watch("src/**/*.html", ["fileinclude"]);
-  gulp.watch(['dist/*.html'], ['html']);
-  gulp.watch(['dist/css/*.css'], ['html']);
+  gulp.watch(["dist/*.html"], ["html"]);
+  gulp.watch(["dist/css/*.css"], ["html"]);
 });
 
-gulp.task("default", ["message", "imageMin", "sass", "scripts", "fileinclude"]);
+gulp.task("default", ["message", "sass", "scripts", "fileinclude"]);
 // gulp dev 调用监听刷新
 gulp.task("dev", ["connect", "watch"]);
