@@ -17,7 +17,6 @@
     "gulp-uglify": "^2.1.2"
   },
   "dependencies": {
-    "autoprefixer": "^8.2.0",
     "gulp-autoprefixer": "^5.0.0",
     "gulp-file-include": "^2.0.1"
   }
