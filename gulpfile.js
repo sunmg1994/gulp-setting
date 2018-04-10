@@ -33,12 +33,12 @@ gulp.task("fileinclude", function() {
 });
 
 // 压缩图片
-// gulp.task("imageMin", () =>
-//   gulp
-//     .src("src/images/*")
-//     .pipe(imagemin())
-//     .pipe(gulp.dest("dist/images"))
-// );
+gulp.task("imageMin", () =>
+  gulp
+    .src("src/images/*")
+    // .pipe(imagemin())
+    .pipe(gulp.dest("dist/images"))
+);
 
 // 压缩js
 gulp.task("scripts", function() {
@@ -66,14 +66,14 @@ gulp.task("sass", function() {
 // 监听
 gulp.task("watch", function() {
   gulp.watch("src/js/*.js", ["scripts"]);
-  // gulp.watch("src/images/*", ["imageMin"]);
+  gulp.watch("src/images/*", ["imageMin"]);
   gulp.watch("src/**/*.scss", ["sass"]);
   gulp.watch("src/**/*.html", ["fileinclude"]);
   gulp.watch(["dist/*.html"], ["html"]);
   gulp.watch(["dist/css/*.css"], ["html"]);
 });
 
-gulp.task("default", ["sass", "scripts", "fileinclude"]);
+gulp.task("default", ["sass", "scripts", "fileinclude","imageMin"]);
 // gulp dev 调用监听刷新
 gulp.task("dev", ["connect", "watch"]);
 
