@@ -1,11 +1,11 @@
-const gulp         = require("gulp");              
-      sass         = require("gulp-sass");         
-      fileinclude  = require("gulp-file-include"); 
-      autoprefixer = require("gulp-autoprefixer"); 
-      uglify       = require("gulp-uglify");
-      imagemin     = require("gulp-imagemin");
-      concat       = require("gulp-concat");
-      connect      = require("gulp-connect");
+const gulp = require("gulp");
+sass = require("gulp-sass");
+fileinclude = require("gulp-file-include");
+autoprefixer = require("gulp-autoprefixer");
+uglify = require("gulp-uglify");
+imagemin = require("gulp-imagemin");
+concat = require("gulp-concat");
+connect = require("gulp-connect");
 
 // 开启服务器
 gulp.task("connect", function() {
@@ -32,6 +32,22 @@ gulp.task("fileinclude", function() {
     .pipe(gulp.dest("dist"));
 });
 
+// 合并scss
+gulp.task("sass", function() {
+  gulp
+    .src("src/**/*.scss")
+    .pipe(concat("style.css"))
+    .pipe(
+      autoprefixer({
+        browsers: ["last 2 versions"],
+        cascade: false
+      })
+    )
+    // CSS样式输出(nested | expanded | compact | compressed)
+    .pipe(sass({ outputStyle: "compact" }).on("error", sass.logError))
+    .pipe(gulp.dest("dist/css"));
+});
+
 // 压缩图片
 gulp.task("imageMin", () =>
   gulp
@@ -49,20 +65,6 @@ gulp.task("scripts", function() {
     .pipe(gulp.dest("dist/js"));
 });
 
-// 合并scss
-gulp.task("sass", function() {
-  gulp
-    .src("src/scss/main.scss")
-    .pipe(
-      autoprefixer({
-        browsers: ["last 2 versions"],
-        cascade: false
-      })
-    )
-    .pipe(sass({outputStyle: 'compressed'}).on("error", sass.logError))
-    .pipe(gulp.dest("dist/css"));
-});
-
 // 监听
 gulp.task("watch", function() {
   gulp.watch("src/js/*.js", ["scripts"]);
@@ -73,10 +75,9 @@ gulp.task("watch", function() {
   gulp.watch(["dist/css/*.css"], ["html"]);
 });
 
-gulp.task("default", ["sass", "scripts", "fileinclude","imageMin"]);
+gulp.task("default", ["sass", "scripts", "fileinclude", "imageMin"]);
 // gulp dev 调用监听刷新
 gulp.task("dev", ["connect", "watch"]);
-
 
 /*
   -- 常用的方法 --
