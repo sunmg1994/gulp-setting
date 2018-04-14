@@ -6,7 +6,9 @@ uglify = require("gulp-uglify");
 imagemin = require("gulp-imagemin");
 concat = require("gulp-concat");
 connect = require("gulp-connect");
-
+// 复制font到dist
+gulp.src('./src/font/*', {base: './src'})
+    .pipe(gulp.dest('dist'));
 // 开启服务器
 gulp.task("connect", function() {
   connect.server({
