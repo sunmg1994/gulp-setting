@@ -36,16 +36,25 @@ gulp.task("fileinclude", function() {
 gulp.task("sass", function() {
   gulp
     .src("src/**/*.scss")
-    .pipe(concat("style.css"))
+    .pipe(sass({ outputStyle: "compact" }).on("error", sass.logError))
     .pipe(
       autoprefixer({
-        browsers: ["last 2 versions"],
-        cascade: false
+        browsers: [
+          "last 2 versions",
+          "Safari >0",
+          "Explorer >0",
+          "Edge >0",
+          "Opera >0",
+          "Firefox >=20"
+        ], //last 2 versions- 主流浏览器的最新两个版本
+        cascade: true, //是否美化属性值 默认：true 像这样：
+        remove: true //是否去掉不必要的前缀 默认：true
       })
     )
+
+    .pipe(concat("style.css"))
     // CSS样式输出(nested | expanded | compact | compressed)
-    .pipe(sass({ outputStyle: "compact" }).on("error", sass.logError))
-    .pipe(gulp.dest("dist/css"));
+    .pipe(gulp.dest("dist/css/"));
 });
 
 // 压缩图片
