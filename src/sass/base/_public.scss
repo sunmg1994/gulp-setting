@@ -1,10 +1,33 @@
 /* 公共样式 */
-body{
-  font-size: 12px;
+body {
   font-family: Microsoft Yahei;
-  color: #585858;
+  font-size: 12px;
   line-height: 24px;
+  position: relative;
+  margin: auto;
+  color: #585858;
+  background: #f7f7f7;
 }
-.f_clearfix{
+a {
+  color: #585858;
+  &:hover {
+    color: red;
+  }
+}
+.f_clearfix {
   @include clearfix;
+}
+.w {
+  width: 1180px;
+  margin: auto;
+}
+.f_fr {
+  float: right;
+}
+.f_fl {
+  float: left;
+}
+.h20 {
+  height: 20px;
+  clear: both;
 }
